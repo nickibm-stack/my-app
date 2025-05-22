@@ -11,7 +11,7 @@ import {
 
 } from '@carbon/react';
 
-import { NavLink, Link } from "react-router";
+import { Link } from "react-router";
 
 // SideNav,
 // SideNavItems,
@@ -19,14 +19,6 @@ import { NavLink, Link } from "react-router";
 // SideNavMenu,
 // SideNavMenuItem,
 
-  <NavLink
-        to="/"
-        className={({ isActive }) =>
-          isActive ? "active" : ""
-        }
-      >
-        Home
-      </NavLink>
 
 export function CustomHeader() {
 
@@ -47,17 +39,17 @@ export function CustomHeader() {
 	
 	Header site name component
 	*/}
-                        <HeaderName href="/" prefix="">
+                      <HeaderName prefix=""> <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                             TypeTest
-                        </HeaderName>
+                            </Link></HeaderName>
 
                         {/*
 	
 	Header Navigation component with 'HeaderMenuItem for each navigation link
 	*/}
                         <HeaderNavigation aria-label="TypeTest">
-                            <HeaderMenuItem href="/sports"><Link to="/sports" style={{ textDecoration: 'none', color: 'inherit' }}>Sports</Link></HeaderMenuItem>
-                            <HeaderMenuItem><Link to="/sports" style={{ textDecoration: 'none', color: 'inherit' }}>Law & Regulation</Link></HeaderMenuItem>
+                            <HeaderMenuItem><Link to="/sports" style={{ textDecoration: 'none', color: 'inherit' }}>Sports</Link></HeaderMenuItem>
+                            <HeaderMenuItem><Link to="/news" style={{ textDecoration: 'none', color: 'inherit' }}>News</Link></HeaderMenuItem>
                             <HeaderMenuItem>People & Society</HeaderMenuItem>
                             <HeaderMenuItem>Economy & Industries</HeaderMenuItem>
                             <HeaderMenuItem>Capital & Markets</HeaderMenuItem>
@@ -89,15 +81,15 @@ export function CustomHeader() {
                             </HeaderGlobalAction>
                             {/* Avatar icon in right top nav */}
                             <HeaderGlobalAction
-                                aria-label="Avatar"
-                                onClick={onClickSideNavExpand}
+                                aria-label="Profile"
+                              
                                 isActive={isSideNavExpanded}
                             >
-                                <svg width="20" height="20">
+                              <Link to="/profile" style={{ textDecoration: 'none', color: 'inherit' }}> <svg width="20" height="20">
                                     <title>user</title>
                                     <path d="M6 15.745A6.968 6.968 0 0 0 10 17a6.968 6.968 0 0 0 4-1.255V15.5a2.5 2.5 0 0 0-2.5-2.5h-3A2.5 2.5 0 0 0 6 15.5v.245zm-.956-.802A3.5 3.5 0 0 1 8.5 12h3a3.5 3.5 0 0 1 3.456 2.943 7 7 0 1 0-9.912 0zM10 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"></path>
                                     <path d="M10 9.841a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 1a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path>
-                                </svg>
+                                </svg></Link> 
                             </HeaderGlobalAction>
                         </HeaderGlobalBar>
 

@@ -4,17 +4,17 @@ import { CustomHeader } from '../Components/CustomHeader';
 import { Box } from '../Components/Box';
 
 
-function Sports() {
+function News() {
   return (
-    <div className="Sports">
+    <div className="News">
       <CustomHeader />
 
       <div style={{padding:60, display: "flex",justifyContent:"center"}}>
-        <Box content='LLM Agent Test' boldText='LLM Agent Test'/>
+        <Box content='NEWS' boldText='NEWS'/>
       </div>
 
     </div>
   );
 }
 
-export default Sports;
+export default News;

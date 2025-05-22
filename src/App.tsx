@@ -12,6 +12,8 @@ function App() {
       <div style={{padding:60, display: "flex",justifyContent:"center"}}>
         <Box content='TEXT' boldText='t'/>
       </div>
+      
+      
 
     </div>
   );
