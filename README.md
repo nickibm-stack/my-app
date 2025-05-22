@@ -1,3 +1,16 @@
+# LLM QE Frontend
+
+# Notes
+
+Current a React frontend interface utilizing native Ollama models. We plan to make a frontend interface to demonstrate differences between models for QE.
+
+Additional improvements:
+
+- Allowing Hosted APIs to be used. Examples such as Gemeni, ChatGPT, Deepseek, etc.
+- RAG pipeline integration - have some QA related documents 
+- Load different QA Functionalities from a text/json file- have one component that is standardized
+    - Current implementation has different sites per functionality
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

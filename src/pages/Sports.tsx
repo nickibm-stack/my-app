@@ -9,11 +9,11 @@ function Sports() {
     <div className="Sports">
       <CustomHeader />
 
-      <div style={{padding:60, display: "flex",justifyContent:"center"}}>
-        <Box content='LLM Agent Test' boldText='LLM Agent Test'/>
+      {/* <div style={{padding:60, display: "flex",justifyContent:"center"}}> */}
+        <Box content='Manual Test Design' boldText='QA Bot'/>
       </div>
 
-    </div>
+    // </div>
   );
 }
 

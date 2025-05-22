@@ -1,0 +1,13 @@
+{
+    "qeFunctions": [
+        {
+            "name": "Manual Testing",
+            "description": "Use this assistant to generate manual test cases and steps from requirements or user stories.",
+            "system_prompt": "You are a manual QA..."
+        },{
+            "name": "Gherkin Testing Testing",
+            "description": "This assistant will generate the Test cases and steps in Gherkin format taking CTD Test Scenario.",
+            "system_prompt": "You are a gherkin tester..."
+        }
+    ]
+}

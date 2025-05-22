@@ -28,7 +28,7 @@ export function CustomHeader() {
             {/* <Box content='Some text.prop' boldText='bollld'/> */}
             <HeaderContainer
                 render={({ isSideNavExpanded, onClickSideNavExpand }) => (
-                    <Header aria-label="TypeTest">
+                    <Header aria-label="Home">
                         {/*
 	
 	SkipToContent is for web based screen readers
@@ -40,21 +40,18 @@ export function CustomHeader() {
 	Header site name component
 	*/}
                       <HeaderName prefix=""> <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                            TypeTest
+                            Home
                             </Link></HeaderName>
 
                         {/*
 	
 	Header Navigation component with 'HeaderMenuItem for each navigation link
 	*/}
-                        <HeaderNavigation aria-label="TypeTest">
-                            <HeaderMenuItem><Link to="/sports" style={{ textDecoration: 'none', color: 'inherit' }}>Sports</Link></HeaderMenuItem>
-                            <HeaderMenuItem><Link to="/news" style={{ textDecoration: 'none', color: 'inherit' }}>News</Link></HeaderMenuItem>
+                        <HeaderNavigation aria-label="Home">
+                            <HeaderMenuItem><Link to="/manualTest" style={{ textDecoration: 'none', color: 'inherit' }}>QA Chatbot</Link></HeaderMenuItem>
+                            <HeaderMenuItem><Link to="/gherkinTest" style={{ textDecoration: 'none', color: 'inherit' }}>Gherkin Tests</Link></HeaderMenuItem>
                             <HeaderMenuItem>People & Society</HeaderMenuItem>
-                            <HeaderMenuItem>Economy & Industries</HeaderMenuItem>
-                            <HeaderMenuItem>Capital & Markets</HeaderMenuItem>
-                            <HeaderMenuItem>Weather & Natural Resources</HeaderMenuItem>
-                            <HeaderMenuItem>Data & Analytics</HeaderMenuItem>
+                     
                         </HeaderNavigation>
                  
 

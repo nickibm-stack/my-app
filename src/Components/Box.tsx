@@ -37,6 +37,31 @@ const modelList = [
 
 ]
 
+const useCaseList = [
+    {
+        label:'Manual QA',
+        description: 'Use this assistant to generate manual test cases and steps from requirements or user stories.',
+        prompt: 'You are a QA Analyst.'
+
+    },
+    {
+        label: 'Gherkin Tests',
+        description: 'This assistant will generate the Test cases and steps in Gherkin format taking CTD Test Scenario.',
+        prompt: 'You are a QA Analyst.'
+    },
+    {
+        label: 'Performance Testing',
+        description: 'Generate a response time analysis and comparison report across test run on a set of transactions.This is helpful for multiple rounds of test run we do for load/stress/volume testing on a certain application.Input is a XLS/TXT file.',
+        prompt: 'You are a QA Analyst.'
+    },
+    {
+        label: 'UI Testing(Swift)',
+        description: 'Generate the User Interface test cases built using XCUITest framework for testing iOS application (Swift)',
+        prompt: 'You are a QA Analyst.'
+    },
+
+]
+
 
 export function Box(content: textContent) {
 
@@ -44,6 +69,9 @@ export function Box(content: textContent) {
     const [userInput, setUserInput] = useState('');
     const [button, setButton] = useState(false);
     const [currentModel, setCurrentModel] = useState('');
+    const [currentQA, setCurrentQA] = useState('');
+    const [currentDesc, setCurrentDesc] = useState('');
+    const [currentPrompt,setCurrentPrompt] = useState('');
 
     //Gets data from our server
     // Currently gets part of JSON data
@@ -64,9 +92,8 @@ export function Box(content: textContent) {
                 body: JSON.stringify({
                     model: currentModel,
                     messages: [
-                        { role: "user", content: "d" },
-                        { role: "assistant", content: "You are a QA agent - " },
-                        { role: "assistant", content: userInput }
+                        { role: "assistant", content: (currentPrompt? currentPrompt : 'Default Prompt - Tell user to please pick an option on their screen') },
+                        { role: "user", content: userInput }
                     ],
                     stream: false,
                 }),
@@ -78,8 +105,7 @@ export function Box(content: textContent) {
 
 
                 }).then((data) => {
-                    // console.log(data);
-                    console.log(data);
+     
                     setServerData(data.message.content);
                 }
                 ).catch((err) => {
@@ -93,16 +119,33 @@ export function Box(content: textContent) {
             <Section style={{ padding: 60, justifyContent: "center" }}>
                 <div style={{ padding: 30 }}>
                     <Heading>{content.boldText}</Heading>
+                    <div style={{ padding: 30 }}>
+                         <text>{currentDesc? currentDesc : 'Please select a QA Usecase from the list'}</text>
+                    </div>
+                   
                 </div>
                 <div style={{ padding: 30 }}>
+                    <Dropdown
+                        helperText="Choose a QA Usecase"
+                        id="default"
+                        invalidText="invalid selection"
+                        items={useCaseList}
+                        onChange={({ selectedItem }) => {setCurrentQA(selectedItem ? selectedItem.label : ''); setCurrentDesc(selectedItem ? selectedItem.description: ''); setCurrentPrompt(selectedItem ? selectedItem.prompt: '')}}
+                        label="Select a Usecase"
+                        titleText="QA Functions"
+                        type="default"
+                        warnText="please notice the warning"
+                    />
+                </div>
+
+                   <div style={{ padding: 30 }}>
                     <Dropdown
                         helperText="Choose an LLM to use"
                         id="default"
                         invalidText="invalid selection"
-                        // itemToString={() => {}}
                         items={modelList}
                         onChange={({ selectedItem }) => setCurrentModel(selectedItem ? selectedItem.label : '')}
-                        label="models"
+                        label="Select a model"
                         titleText="Models"
                         type="default"
                         warnText="please notice the warning"
