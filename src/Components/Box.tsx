@@ -1,7 +1,13 @@
 
 import { useState } from 'react';
-import { Button, Dropdown, FluidForm, Heading, Section, TextInput } from '@carbon/react';
+import { Button, Dropdown, FluidForm, Heading, Section, TextArea, TextInput } from '@carbon/react';
 import { useEffect } from 'react';
+import { useCaseList } from '../data';
+import { modelList } from '../data';
+import { Text } from '@carbon/react/lib/components/Text';
+import ConversationList from './ConversationList';
+import LargeTextBox from './TextBoxMe';
+
 
 /**
  * @typedef {object} textContent
@@ -15,53 +21,6 @@ type textContent = {
 };
 
 
-const modelList = [
-    {
-        label: 'gemma3:latest'
-    },
-    {
-        label: 'deepseek-r1:32b'
-    },
-    {
-        label: 'qwen3:0.6b'
-    },
-    {
-        label: 'granite3.2:latest'
-    },
-    {
-        label: 'deepseek-r1:latest'
-    },
-    {
-        label: 'starcoder2:latest'
-    },
-
-]
-
-const useCaseList = [
-    {
-        label:'Manual QA',
-        description: 'Use this assistant to generate manual test cases and steps from requirements or user stories.',
-        prompt: 'You are a QA Analyst.'
-
-    },
-    {
-        label: 'Gherkin Tests',
-        description: 'This assistant will generate the Test cases and steps in Gherkin format taking CTD Test Scenario.',
-        prompt: 'You are a QA Analyst.'
-    },
-    {
-        label: 'Performance Testing',
-        description: 'Generate a response time analysis and comparison report across test run on a set of transactions.This is helpful for multiple rounds of test run we do for load/stress/volume testing on a certain application.Input is a XLS/TXT file.',
-        prompt: 'You are a QA Analyst.'
-    },
-    {
-        label: 'UI Testing(Swift)',
-        description: 'Generate the User Interface test cases built using XCUITest framework for testing iOS application (Swift)',
-        prompt: 'You are a QA Analyst.'
-    },
-
-]
-
 
 export function Box(content: textContent) {
 
@@ -70,16 +29,23 @@ export function Box(content: textContent) {
     const [button, setButton] = useState(false);
     const [currentModel, setCurrentModel] = useState('');
     const [currentQA, setCurrentQA] = useState('');
+    const [currentItem,setCurrentItem] = useState({})
     const [currentDesc, setCurrentDesc] = useState('');
     const [currentPrompt,setCurrentPrompt] = useState('');
+    const [currentConversation,setConversation] = useState<string[][]>([]);
 
     //Gets data from our server
     // Currently gets part of JSON data
     //Currently we see second options request
+
+const handleAddItem = (agent:string, text: string) => {
+    setConversation(currentConversation => [...currentConversation, [agent, text]]);
+  };
+
     useEffect(() => {
 
         if (currentModel == '') {
-            setServerData("Choose a LLM!");
+            setServerData("Choose a model and a Desired Usecase from the list!");
         }
         else {
             fetch('http://localhost:11434/api/chat', {
@@ -92,7 +58,7 @@ export function Box(content: textContent) {
                 body: JSON.stringify({
                     model: currentModel,
                     messages: [
-                        { role: "assistant", content: (currentPrompt? currentPrompt : 'Default Prompt - Tell user to please pick an option on their screen') },
+                        { role: "assistant", content: (currentPrompt ? currentPrompt : 'Default Prompt - Tell user to please pick an option on their screen') },
                         { role: "user", content: userInput }
                     ],
                     stream: false,
@@ -106,7 +72,8 @@ export function Box(content: textContent) {
 
                 }).then((data) => {
      
-                    setServerData(data.message.content);
+                    handleAddItem('Assistant',data.message.content);
+                    // setServerData(data.message.content);
                 }
                 ).catch((err) => {
                     console.log(err);
@@ -114,13 +81,21 @@ export function Box(content: textContent) {
         }
 
     }, [button]);
+
+    useEffect(() => {
+
+        setConversation([]);
+
+    }, [currentDesc,currentModel]);
+
+
     return (
         <div style={{ padding: 60, justifyContent: "center" }}>
             <Section style={{ padding: 60, justifyContent: "center" }}>
                 <div style={{ padding: 30 }}>
                     <Heading>{content.boldText}</Heading>
                     <div style={{ padding: 30 }}>
-                         <text>{currentDesc? currentDesc : 'Please select a QA Usecase from the list'}</text>
+                         <Text>{currentDesc? currentDesc : 'Please select a QA Usecase from the list'}</Text>
                     </div>
                    
                 </div>
@@ -131,6 +106,7 @@ export function Box(content: textContent) {
                         invalidText="invalid selection"
                         items={useCaseList}
                         onChange={({ selectedItem }) => {setCurrentQA(selectedItem ? selectedItem.label : ''); setCurrentDesc(selectedItem ? selectedItem.description: ''); setCurrentPrompt(selectedItem ? selectedItem.prompt: '')}}
+                       // onChange={({ selectedItem }) => {setCurrentItem(selectedItem ? selectedItem : {}); console.log(selectedItem) }}
                         label="Select a Usecase"
                         titleText="QA Functions"
                         type="default"
@@ -152,22 +128,49 @@ export function Box(content: textContent) {
                     />
                 </div>
 
-            </Section>
+                {/* <Text style={{ fontSize: 24 }}>
+                    {currentConversation.map(([agent, text], idx) => (
+                        <div key={idx} style={{padding: 10}}><Text>{agent}:</Text> {text}</div>
+                    ))}
+                </Text> */}
 
-
-            <div style={{ padding: 10, display: "flex", }} >
+                   <ConversationList conversation={currentConversation} />
+                <div style={{ padding: 10, display: "flex",  justifyContent: "center" }} >
                 <FluidForm>
-                    <TextInput type="text" labelText="Text input label" id="text-input-1" value={userInput} onChange={e => setUserInput(e.target.value)} />
+                    {/* <TextInput type="text" labelText="Talk to LLM" id="text-input-1" value={userInput} onChange={e => setUserInput(e.target.value)} /> */}
+                         <TextArea
+                        labelText=""
+                        onChange={e => setUserInput(e.target.value)}
+                        value={userInput}
+                        rows={10} // Adjust rows for height
+                        cols={50} // Optional: usually handled by container width
+                        id="conversation-textarea"
+                />
                 </FluidForm>
 
-                <Button onClick={e => (button == true) ? (setButton(false)) : setButton(true)}>
+                {/* <LargeTextBox /> */}
+
+                
+
+                <Button onClick={((e) => {(button == true) ? (setButton(false)) : setButton(true);handleAddItem('User',userInput)})}>
                     Send to Agent
                 </Button>
             </div>
 
+         
+
+            </Section>
+
+
+            
+{/* 
             <div style={{ padding: 40 }} >
-                <text style={{ fontSize: 24 }}> {serverData}</ text>
-            </div>
+                <Text style={{ fontSize: 24 }}>
+                    {currentConversation.map(([agent, text], idx) => (
+                        <div key={idx} style={{padding: 10}}><Text>{agent}:</Text> {text}</div>
+                    ))}
+                </Text>
+            </div> */}
 
 
         </div>
