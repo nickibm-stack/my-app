@@ -20,7 +20,7 @@ root.render(
     <Routes>
         <Route path="/" element={<App />} />
         <Route path="/manualTest" element={<Sports />} />
-        <Route path="/gherkinTest" element={<News />} />
+        <Route path="/documentHelper" element={<News />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
   </React.StrictMode>

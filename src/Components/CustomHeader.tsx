@@ -49,7 +49,7 @@ export function CustomHeader() {
 	*/}
                         <HeaderNavigation aria-label="Home">
                             <HeaderMenuItem><Link to="/manualTest" style={{ textDecoration: 'none', color: 'inherit' }}>QA Chatbot</Link></HeaderMenuItem>
-                            <HeaderMenuItem><Link to="/gherkinTest" style={{ textDecoration: 'none', color: 'inherit' }}>Gherkin Tests</Link></HeaderMenuItem>
+                            <HeaderMenuItem><Link to="/documentHelper" style={{ textDecoration: 'none', color: 'inherit' }}>Document Helper</Link></HeaderMenuItem>
                             <HeaderMenuItem>People & Society</HeaderMenuItem>
                      
                         </HeaderNavigation>

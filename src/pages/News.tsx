@@ -2,6 +2,7 @@ import React from 'react';
 
 import { CustomHeader } from '../Components/CustomHeader';
 import { Box } from '../Components/Box';
+import { DocumentCollector } from '../Components/DocumentCollector';
 
 
 function News() {
@@ -10,7 +11,7 @@ function News() {
       <CustomHeader />
 
       <div style={{padding:60, display: "flex",justifyContent:"center"}}>
-        <Box content='NEWS' boldText='NEWS'/>
+        <DocumentCollector content='NEWS' boldText='Document Helper'/>
       </div>
 
     </div>

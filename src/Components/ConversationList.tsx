@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tile } from 'carbon-components-react';
 import 'carbon-components/css/carbon-components.min.css';
+import { Text } from '@carbon/react/lib/components/Text';
 
 const conversations = [
   { id: 1, user: 'Alice', message: 'Hey there, how are you?' },
@@ -25,7 +26,7 @@ const ConversationList: React.FC<ConversationListProps> = ({ conversation }) => 
     }}>
       {conversation.map(convo => (
         <Tile key={convo[0]} className="mb-3">
-          <strong>{convo[0]}</strong>: {convo[1]}
+          <strong>{convo[0]}</strong>: <Text style={{whiteSpace: 'pre-wrap'}}>{convo[1]}</Text>
         </Tile>
       ))}
     </div>
